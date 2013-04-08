@@ -78,9 +78,9 @@ var LinkifiedMessage;
     getTokens = function()
     {
         var i, l, match, modified,
-            funcExpr = /^(\s*)(`?([a-z_\x7f-\xff][\w\x7f-\xff]*)((\((\)?))?)`?)$/i,
-            googleExpr = /^(\s*google[ \t]{1,2})((?!this|that|is)[\w+]+|'(?:[^'\\]|\\.)+')$/i,
-            tokenExpr = /\s*(google[ \t]{1,2}([\w+]+|'(?:[^'\\]|\\.)+')|`?([a-z_\x7f-\xff][\w\x7f-\xff]*)((\((\)?))?)`?|\S+)/ig,
+            funcExpr = /^(\s*)(([a-z_\x7f-\xff][\w\x7f-\xff]*)(\s*\())$/i,
+            googleExpr = /^(\s*google[ \t]{1,2})([\w+]+|'(?:[^'\\]|\\.)+')$/i,
+            tokenExpr = /\s*(google[ \t]{1,2}([\w+]+|'(?:[^'\\]|\\.)+')|`?([a-z_\x7f-\xff][\w\x7f-\xff]*)(\s*\()`?|\S+)/ig,
             tokens = this.queryString.text.match(tokenExpr);
 
         for (i = 0, l = tokens.length; i < l; i++) {
@@ -88,7 +88,7 @@ var LinkifiedMessage;
                 match = tokens[i].match(googleExpr);
                 match[2] = match[2].replace(/\\([\\'])/g, '$1');
                 match[2] = match[2].replace(/(^'|'$)/g, '');
-                modified = match[1] + '[' + match[2].replace(/[+]/g, ' ') + ']';
+                modified = 'google [' + match[2].replace(/[+]/g, ' ') + ']';
                 modified+= '(https://google.com/search?q=' + escape(match[2]) + ')';
 
                 addString.call(this, modified);
@@ -97,7 +97,7 @@ var LinkifiedMessage;
                 this.modified = true;
             } else if (funcExpr.test(tokens[i])) {
                 match = tokens[i].match(funcExpr);
-                addPattern.call(this, match[1], match[3], '`'+ match[3] + match[4] + '`', match[2] );
+                addPattern.call(this, match[1], match[3], '`' + match[3] + match[4] + '`', match[2] );
             } else  {
                 addString.call(this, tokens[i]);
             }
