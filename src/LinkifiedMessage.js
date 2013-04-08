@@ -79,8 +79,8 @@ var LinkifiedMessage;
     {
         var i, l, match, modified,
             funcExpr = /^(\s*)(`?([a-z_\x7f-\xff][\w\x7f-\xff]*)((\((\)?))?)`?)$/i,
-            googleExpr = /^(\s*google[ \t]{1,2})([\w+]+|'(?:[^'\\]|\\.)+')$/i,
-            tokenExpr = /\s*(google[ \t]{1,2}([\w+]+|'(?:[^'\\]|\\.)+')|`?([a-z_\x7f-\xff][\w\x7f-\xff]*)((\((\)?))?)`?|\S+)/igm,
+            googleExpr = /^(\s*google[ \t]{1,2})((?!this|that|is)[\w+]+|'(?:[^'\\]|\\.)+')$/i,
+            tokenExpr = /\s*(google[ \t]{1,2}([\w+]+|'(?:[^'\\]|\\.)+')|`?([a-z_\x7f-\xff][\w\x7f-\xff]*)((\((\)?))?)`?|\S+)/ig,
             tokens = this.queryString.text.match(tokenExpr);
 
         for (i = 0, l = tokens.length; i < l; i++) {
