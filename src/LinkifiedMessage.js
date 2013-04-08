@@ -78,28 +78,27 @@ var LinkifiedMessage;
     getTokens = function()
     {
         var i, l, match, modified,
-            funcExpr = /^(\s*)((`?)([a-z_\x7f-\xff][a-z0-9_\x7f-\xff]*)\(\)\3)$/i,
-            wordExpr = /^(\s*)`([a-z_\x7f-\xff][a-z0-9_\x7f-\xff]*)`$/i,
-            googleExpr = /^(\s*google[ \t]+)"((?:[^"\\]|\\.)+)"$/i,
-            tokens = this.queryString.text.match(/\s*(?:google[ \t]+"(?:[^"\\]|\\.)+"|`(?:[^`\\]|\\.)*`|\S+)/ig);
+            funcExpr = /^(\s*)(`?([a-z_\x7f-\xff][\w\x7f-\xff]*)((\((\)?))?)`?)$/i,
+            googleExpr = /^(\s*google[ \t]{1,2})([\w+]+|'(?:[^'\\]|\\.)+')$/i,
+            tokenExpr = /\s*(google[ \t]{1,2}([\w+]+|'(?:[^'\\]|\\.)+')|`?([a-z_\x7f-\xff][\w\x7f-\xff]*)((\((\)?))?)`?|\S+)/igm,
+            tokens = this.queryString.text.match(tokenExpr);
 
         for (i = 0, l = tokens.length; i < l; i++) {
-            if (funcExpr.test(tokens[i])) {
-                match = tokens[i].match(funcExpr);
-                addPattern.call(this, match[1], match[4], "`" + match[4] + "()`", match[2]);
-            } else if (wordExpr.test(tokens[i])) {
-                match = tokens[i].match(wordExpr);
-                addPattern.call(this, match[1], match[2], "`" + match[2] + "`", "`" + match[2] + "`");
-            } else if (googleExpr.test(tokens[i])) {
+            if (googleExpr.test(tokens[i])) {
                 match = tokens[i].match(googleExpr);
-                match[2] = match[2].replace(/\\([\\"])/g, '$1');
-                modified = match[1] + '"[' + match[2] + '](https://google.com/search?q=' + escape(match[2]) + ')"';
+                match[2] = match[2].replace(/\\([\\'])/g, '$1');
+                match[2] = match[2].replace(/(^'|'$)/g, '');
+                modified = match[1] + '[' + match[2].replace(/[+]/g, ' ') + ']';
+                modified+= '(https://google.com/search?q=' + escape(match[2]) + ')';
 
                 addString.call(this, modified);
 
                 this.originalTextLength += modified.length - match[0].length;
                 this.modified = true;
-            } else {
+            } else if (funcExpr.test(tokens[i])) {
+                match = tokens[i].match(funcExpr);
+                addPattern.call(this, match[1], match[3], '`'+ match[3] + match[4] + '`', match[2] );
+            } else  {
                 addString.call(this, tokens[i]);
             }
         }
