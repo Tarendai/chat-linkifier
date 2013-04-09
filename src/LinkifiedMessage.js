@@ -88,7 +88,7 @@ var LinkifiedMessage;
                 match = tokens[i].match(googleExpr);
                 match[2] = match[2].replace(/\\([\\'])/g, '$1');
                 match[2] = match[2].replace(/(^'|'$)/g, '');
-                modified = 'google [' + match[2].replace(/[+]/g, ' ') + ']';
+                modified = match[1] + '[' + match[2].replace(/[+]/g, ' ') + ']';
                 modified+= '(https://google.com/search?q=' + escape(match[2]) + ')';
 
                 addString.call(this, modified);
