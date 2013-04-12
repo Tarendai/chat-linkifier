@@ -1,6 +1,6 @@
 {
   "name": "PHP manual linkifier",
-  "version": "0.0.0.6",
+  "version": "0.0.0.6.K.2",
   "manifest_version": 2,
   "description": "Linkify function references in PHP chat",
   "background": {
@@ -15,6 +15,7 @@
     {
       "matches": [
         "http://chat.stackoverflow.com/rooms/1/*",
+        "http://chat.stackoverflow.com/rooms/25767/*",
         "http://chat.stackoverflow.com/rooms/11/*"
       ],
       "js": [
@@ -39,5 +40,5 @@
     "LinkifiedMessage.js",
     "inject.js"
   ],
-  "update_url": "https://github.com/DaveRandom/chat-linkifier/raw/master/update.xml"
+  "update_url": "https://github.com/godka/chat-linkifier/raw/master/update.xml"
 }
