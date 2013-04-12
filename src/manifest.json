@@ -1,7 +1,7 @@
 {
   "name": "PHP manual linkifier",
-  "version": "0.0.0.6.K.2",
-  "manifest_version": 2,
+  "version": "0.0.0.7",
+  "manifest_version": 3,
   "description": "Linkify function references in PHP chat",
   "background": {
     "scripts": [
