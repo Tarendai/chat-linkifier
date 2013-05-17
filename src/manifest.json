@@ -1,8 +1,8 @@
 {
   "name": "PHP manual linkifier",
-  "version": "0.0.0.7",
-  "manifest_version": 3,
-  "description": "Linkify function references in PHP chat",
+  "version": "0.0.0.8",
+  "manifest_version": 4,
+  "description": "Linkify function references in PHP chat too",
   "background": {
     "scripts": [
       "LookupCache.js",
@@ -16,7 +16,9 @@
       "matches": [
         "http://chat.stackoverflow.com/rooms/1/*",
         "http://chat.stackoverflow.com/rooms/25767/*",
-        "http://chat.stackoverflow.com/rooms/11/*"
+        "http://chat.stackoverflow.com/rooms/11/*",
+        "http://chat.stackoverflow.com/rooms/6/*",
+        "http://chat.stackexchange.com/rooms/6/stoppress"
       ],
       "js": [
         "ChromeExtensionRelay.js",
@@ -40,5 +42,5 @@
     "LinkifiedMessage.js",
     "inject.js"
   ],
-  "update_url": "https://github.com/godka/chat-linkifier/raw/master/update.xml"
+  "update_url": "https://raw.github.com/Tarendai/chat-linkifier/master/update.xml"
 }
